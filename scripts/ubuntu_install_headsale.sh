@@ -7,7 +7,13 @@ wget --output-document=/tmp/headscale.deb "https://github.com/juanfont/headscale
 apt install /tmp/headscale.deb
 
 # Edit config
-#nano /etc/headscale/config.yaml
+echo $SERVER_URL
+sed -i \
+  -e "s|server_url: http://127.0.0.1:8080|server_url: $SERVER_URL|" \
+  -e "s|listen_addr: 127.0.0.1:8080|listen_addr: 0.0.0.0:8080|" \
+  -e "s|grpc_listen_addr: 127.0.0.1:50443|grpc_listen_addr: 0.0.0.0:50443|" \
+  -e "s|base_domain: example.com|base_domain: local|" \
+  /etc/headscale/config.yaml
 
 systemctl enable --now headscale
-sudo systemctl status headscale
+systemctl status headscale
