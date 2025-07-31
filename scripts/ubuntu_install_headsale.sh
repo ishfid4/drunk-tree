@@ -13,6 +13,7 @@ sed -i \
   -e "s|listen_addr: 127.0.0.1:8080|listen_addr: 0.0.0.0:8080|" \
   -e "s|grpc_listen_addr: 127.0.0.1:50443|grpc_listen_addr: 0.0.0.0:50443|" \
   -e "s|base_domain: example.com|base_domain: local|" \
+  -e "/- 1\.1\.1\.1/{N;N;N;s/- 1\.1\.1\.1\n[[:space:]]*- 1\.0\.0\.1\n[[:space:]]*- 2606:4700:4700::1111\n[[:space:]]*- 2606:4700:4700::1001/[]/;}" \
   /etc/headscale/config.yaml
 
 systemctl enable --now headscale
